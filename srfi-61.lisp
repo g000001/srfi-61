@@ -35,12 +35,12 @@
                                             (APPLY receiver T)
                                             more-clause ***)))))
 
-    ((COND (funcall test) more-clause ***)
+    ((COND (test) more-clause ***)
      (with ((T (gensym)))
        (LET ((T test))
          (COND/MAYBE-MORE T T more-clause ***))))
 
-    ((COND (funcall test body1 body2 ***) more-clause ***)
+    ((COND (test body1 body2 ***) more-clause ***)
      (COND/MAYBE-MORE test
                       (PROGN body1 body2 ***)
                       more-clause ***))))
@@ -65,4 +65,10 @@
          1))
   (is-false (let ((alist '((a . 1) (b . 2) (c . 3))))
               (cond ((assoc 'z alist) #'values :=> #'cdr)
-                    (:else nil)))))
+                    (:else nil))))
+  (is (eq 'a (srfi-61:cond (cl:t 'a)
+                           (cl:t 'b)
+                           (:else 'c))))
+  (is (eq 'b (srfi-61:cond (cl:nil 'a)
+                           (cl:t 'b)
+                           (:else 'c)))))
