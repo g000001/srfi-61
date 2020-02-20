@@ -10,7 +10,8 @@
 
 (defpackage "https://github.com/g000001/srfi-61"
   (:use)
-  (:export cond =>))
+  (:shadowing-import-from cl-user else)
+  (:export cond => else))
 
 
 (defpackage "https://github.com/g000001/srfi-61#internals"
